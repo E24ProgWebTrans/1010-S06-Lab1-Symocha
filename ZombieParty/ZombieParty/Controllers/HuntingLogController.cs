@@ -1,23 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ZombieParty.Models;
 using ZombieParty.Models.Data;
-using ZombieParty.ViewModels;
 
 namespace ZombieParty.Controllers
 {
-    public class WeaponController : Controller
+    public class HuntingLogController : Controller
     {
         private ZombiePartyDbContext _baseDonnees { get; set; }
 
-        public WeaponController(ZombiePartyDbContext baseDonnees)
+        public HuntingLogController(ZombiePartyDbContext baseDonnees)
         {
             _baseDonnees = baseDonnees;
         }
 
         public IActionResult Index()
         {
-            List<Weapon> weapons = _baseDonnees.Weapons.ToList();
-            return View(weapons);
+            return View(_baseDonnees.HuntingLogs.ToList());
         }
 
         //GET
@@ -25,37 +23,37 @@ namespace ZombieParty.Controllers
         {
             if (id == null || id == 0)
                 // create
-                return View(new Weapon());
+                return View(new HuntingLog());
             else
                 //update
-                return View(_baseDonnees.Weapons.Find(id));
+                return View(_baseDonnees.HuntingLogs.Find(id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Weapon weapon)
+        public IActionResult Upsert(HuntingLog huntingLog)
         {
             if (ModelState.IsValid)
             {
                 // Create
-                if (weapon.WeaponId == 0)
+                if (huntingLog.Id == 0)
                 {
                     // Ajouter à la BD
-                    _baseDonnees.Weapons.Add(weapon);
-                    TempData["Success"] = $"{weapon.Name} weapon added";
+                    _baseDonnees.HuntingLogs.Add(huntingLog);
+                    TempData["Success"] = $"{huntingLog.Title} hunting log added";
                 }
                 else
                 {
                     // Update
-                    _baseDonnees.Weapons.Update(weapon);
-                    TempData["success"] = $"{weapon.Name} weapon updated";
+                    _baseDonnees.HuntingLogs.Update(huntingLog);
+                    TempData["success"] = $"{huntingLog.Title} hunting log updated";
                 }
                 _baseDonnees.SaveChanges();
 
                 return this.RedirectToAction("Index");
             }
 
-            return this.View(weapon);
+            return this.View(huntingLog);
         }
     }
 }

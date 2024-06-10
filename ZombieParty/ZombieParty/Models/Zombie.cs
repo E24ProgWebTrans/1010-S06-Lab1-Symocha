@@ -17,15 +17,17 @@ namespace ZombieParty.Models
         [Range(1, 20, ErrorMessage = "{0} requires a value between {1} and {2}.")]
         public int Point { get; set; }
 
+        public int Force { get; set; }
+
         // FACULTATIF on peut formellement identifier le champ lien
         // sinon le champ de foreignKey sera auto généré dans la BD
         [Display(Name = "Zombie Type")]
         [ForeignKey("ZombieType")]
         public int ZombieTypeId { get; set; }
         [ValidateNever] 
-        public ZombieType? ZombieType { get; set; }
+        public virtual ZombieType? ZombieType { get; set; }
 
         [ValidateNever] 
-        public List<HuntingLog> HuntingLogs { get; set; }
+        public virtual List<HuntingLog> HuntingLogs { get; set; }
     }
 }

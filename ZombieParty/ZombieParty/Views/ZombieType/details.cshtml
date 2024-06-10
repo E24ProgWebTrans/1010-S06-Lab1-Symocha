@@ -10,9 +10,8 @@
     @*  POUR CHAQUE ZOMBIE:*@
     @foreach (var item in Model.ZombiesList)
     {
-        <partial name="_Zombie_Card" model="item" />
+        <partial name="_ZombieCard" model="item" />
     }
-
 </div>
 @* SI AUCUN ZOMBIE ASSOCIÉ*@
 @if (Model.ZombiesList.Count == 0)
