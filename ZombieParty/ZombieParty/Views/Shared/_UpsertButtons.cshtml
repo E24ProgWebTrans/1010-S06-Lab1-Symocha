@@ -1,0 +1,14 @@
+﻿@model int
+<div class="col">
+    @if (Model == 0)
+    {
+            <input type="submit" class="btn btn-success w-100" value="Create" />
+    }
+    else
+    {
+            <input type="submit" class="btn btn-info w-100" value="Edit" />
+    }
+</div>
+<div class="col">
+    <a asp-action="Index" class="btn btn-secondary w-100">Back to list</a>
+</div>
